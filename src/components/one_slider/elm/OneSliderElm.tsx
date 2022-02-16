@@ -1,11 +1,13 @@
 import React from 'react';
 import { common_types, common_constant } from 'react-commons-ts';
+// 
+import { getClassModuleCss } from '../../../utils/getClassModuleCss';
 //
 import OneSliderElmStyles from './OneSliderElm.scss';
 
 //
 function _getClassModuleCss(className = '') {
-    return `${className} ${OneSliderElmStyles[className]}`;
+    return getClassModuleCss(className, OneSliderElmStyles);
 }
 
 //

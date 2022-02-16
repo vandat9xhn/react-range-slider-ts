@@ -12,12 +12,12 @@ import { refGetBoundingClientRect } from '../utils/refGetBoundingClientRect';
 //
 
 //
-interface useOneSliderProps {
+export interface useOneSliderProps {
     ref_range_elm: common_types.RefElmType<HTMLDivElement>;
     ref_has_change_range: common_types.UseRefType<boolean>;
 
     getRangeAngel?: () => number;
-    handleChange: (value: number) => void;
+    handleChange: (new_percent: number) => void;
 
     afterMouseDown?: () => void;
     afterMousemove?: () => void;

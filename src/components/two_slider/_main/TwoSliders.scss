@@ -1,0 +1,53 @@
+%trans {
+    transition: all 200ms ease-in;
+}
+
+// ----
+
+.InputRangeTwoSliders {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    pointer-events: all;
+}
+.InputRangeTwoSliders-not-run {
+    .InputRangeTwoSliders_range-active {
+        @extend %trans;
+    }
+
+    .InputRangeTwoSliders_slider {
+        @extend %trans;
+    }
+}
+
+.InputRangeTwoSliders_range{
+    // pos-abs left-0 y-center wh-100 cursor-pointer
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 100%;
+    height: 10%;
+
+    cursor: pointer;
+}
+
+.InputRangeTwoSliders_range_active{
+    // pos-abs h-100per y-center pointer-events-none
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    height: 100%;
+    pointer-events: none;
+}
+
+.InputRangeTwoSliders_slider {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
