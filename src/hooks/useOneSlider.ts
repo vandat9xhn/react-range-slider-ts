@@ -14,7 +14,8 @@ import { refGetBoundingClientRect } from '../utils/refGetBoundingClientRect';
 //
 export interface useOneSliderProps {
     ref_range_elm: common_types.RefElmType<HTMLDivElement>;
-    ref_has_change_range: common_types.UseRefType<boolean>;
+    ref_has_change_range?: common_types.UseRefType<boolean>;
+    ref_is_run?: common_types.UseRefType<boolean>;
 
     getRangeAngel?: () => number;
     handleChange: (new_percent: number) => void;
@@ -26,8 +27,9 @@ export interface useOneSliderProps {
 
 //
 export function useOneSlider({
-    ref_range_elm = { current: null },
+    ref_range_elm,
     ref_has_change_range = { current: false },
+    ref_is_run = { current: false },
 
     getRangeAngel = () => 0,
     handleChange = () => {},
@@ -37,8 +39,6 @@ export function useOneSlider({
     afterMouseUp = () => {}
 }: useOneSliderProps) {
     //
-    const ref_is_run = useRef(false);
-
     const ref_range_obj = useRef({
         range_angel: 0,
         x_range_start: 0,
@@ -152,7 +152,6 @@ export function useOneSlider({
     // ----
 
     return {
-        ref_is_run,
         ref_range_obj,
 
         onDown,

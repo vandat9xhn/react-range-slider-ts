@@ -13,10 +13,10 @@ interface OneSliderProps {
     value: OneSliderElmProps['value'];
 
     only_drag_slider?: OneSliderElmProps['only_drag_slider'];
-
     ref_has_change_range?: common_types.UseRefType<boolean>;
+    ref_is_run?: common_types.UseRefType<boolean>;
+    
     getRangeAngel?: () => number;
-
     callbackStart?: () => void;
     handleChange: (new_percent: number) => void;
 
@@ -34,6 +34,7 @@ function OneSlider({
 
     only_drag_slider,
     ref_has_change_range = { current: false },
+    ref_is_run = { current: false },
     getRangeAngel,
 
     // callbackStart = () => {},
@@ -47,9 +48,10 @@ function OneSlider({
     const ref_range_elm = useRef<HTMLDivElement>(null);
 
     //
-    const { ref_is_run, onDown, handleClick } = useOneSlider({
+    const { onDown, handleClick } = useOneSlider({
         ref_range_elm: ref_range_elm,
         ref_has_change_range: ref_has_change_range,
+        ref_is_run: ref_is_run,
 
         getRangeAngel: getRangeAngel,
         handleChange: handleChange,

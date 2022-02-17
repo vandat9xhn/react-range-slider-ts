@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { OneSlider, TwoSliders } from 'react-range-slider-ts';
 import 'react-range-slider-ts/dist/index.css';
 //
@@ -44,6 +44,13 @@ const App = () => {
     const [value1, setValue1] = useState(0);
     const [value2, setValue2] = useState(100);
 
+    //
+    const [, setForceUpDate] = useState(false);
+
+    //
+    const ref_slider_num_run = useRef(-1);
+    const ref_is_run = useRef(false);
+
     // ------
 
     //
@@ -62,6 +69,17 @@ const App = () => {
     }
 
     //
+    function afterMouseUp() {
+        setForceUpDate((force_update) => !force_update);
+    }
+
+    //
+    function handleReset() {
+        setValue1(0);
+        setValue2(100);
+    }
+
+    //
     return (
         <div
             className='App'
@@ -69,41 +87,93 @@ const App = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '100vh',
-                backgroundColor: 'black'
+
+                minHeight: '100vh',
+                padding: '20px',
+                backgroundColor: 'black',
+
+                boxSizing: 'border-box'
             }}
         >
-            <div
-                className='App_slider'
-                style={{ width: '500px', height: '8px' }}
-            >
-                <OneSlider
-                    range={range}
-                    active_range={active_range}
-                    slider={slider}
-                    value={percent}
-                    handleChange={handleChange}
-                    //
-                    only_drag_slider={false}
-                />
-
-                <div style={{ padding: '50px' }}></div>
+            <div>
+                <div
+                    style={{
+                        marginBottom: '10px',
+                        fontSize: '17px',
+                        fontWeight: 500,
+                        color: 'white'
+                    }}
+                >
+                    Slider is running: {ref_is_run.current ? 'True' : 'False'}
+                </div>
 
                 <div
                     className='App_slider'
-                    style={{ width: '500px', height: '8px' }}
+                    style={{ width: '500px', maxWidth: '95vw' }}
                 >
-                    <TwoSliders
-                        range={range}
-                        active_range={active_range}
-                        slider_1={slider}
-                        slider_2={slider}
-                        //
-                        value1={value1}
-                        value2={value2}
-                        handleChangeSlider1={handleChangeSlider1}
-                        handleChangeSlider2={handleChangeSlider2}
-                    />
+                    <div style={{ height: '8px' }}>
+                        <OneSlider
+                            range={range}
+                            active_range={active_range}
+                            slider={slider}
+                            value={percent}
+                            //
+                            only_drag_slider={false}
+                            ref_is_run={ref_is_run}
+                            //
+                            handleChange={handleChange}
+                            afterMouseUp={afterMouseUp}
+                        />
+                    </div>
+
+                    <div style={{ padding: '50px' }}></div>
+
+                    <div
+                        style={{
+                            marginBottom: '10px',
+                            fontSize: '17px',
+                            fontWeight: 500,
+                            color: 'white'
+                        }}
+                    >
+                        <div>Slider: {ref_slider_num_run.current}.</div>
+
+                        <div>Slider1 = {Math.round(value1)}.</div>
+
+                        <div>Slider2 = {Math.round(value2)}</div>
+
+                        <div
+                            style={{ cursor: 'pointer' }}
+                            onClick={handleReset}
+                        >
+                            Reset
+                        </div>
+                    </div>
+
+                    <div
+                        className='App_slider'
+                        style={{
+                            width: '500px',
+                            maxWidth: '95vw',
+                            height: '8px'
+                        }}
+                    >
+                        <TwoSliders
+                            range={range}
+                            active_range={active_range}
+                            slider1={slider}
+                            slider2={slider}
+                            //
+                            ref_slider_num_run={ref_slider_num_run}
+                            value1={value1}
+                            value2={value2}
+                            //
+                            handleChangeSlider1={handleChangeSlider1}
+                            handleChangeSlider2={handleChangeSlider2}
+                            //
+                            afterMouseUp={afterMouseUp}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

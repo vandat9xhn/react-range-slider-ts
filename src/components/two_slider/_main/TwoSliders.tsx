@@ -9,10 +9,13 @@ import TwoSlidersElm from '../elm/TwoSlidersElm';
 interface TwoSlidersProps {
     range: React.ReactElement;
     active_range: React.ReactElement;
-    slider_1: React.ReactElement;
-    slider_2: React.ReactElement;
+    slider1: React.ReactElement;
+    slider2: React.ReactElement;
     value1: number;
     value2: number;
+
+    ref_slider_num_run?: common_types.UseRefType<number>;
+    ref_has_change_range?: common_types.UseRefType<boolean>;
 
     getRangeAngel?: () => number;
     handleChangeSlider1: (new_percent: number) => void;
@@ -27,8 +30,11 @@ interface TwoSlidersProps {
 function TwoSliders({
     range,
     active_range,
-    slider_1,
-    slider_2,
+    slider1,
+    slider2,
+
+    ref_slider_num_run = { current: -1 },
+    ref_has_change_range = { current: false },
     value1,
     value2,
 
@@ -43,12 +49,13 @@ function TwoSliders({
 }: TwoSlidersProps) {
     //
     const ref_range_elm = useRef<HTMLDivElement>(null);
-    const ref_has_change_range = useRef(false);
 
     //
-    const { onDown, ref_slider_num_run } = useTwoSlider({
+    const { onDown } = useTwoSlider({
         ref_range_elm: ref_range_elm,
         ref_has_change_range: ref_has_change_range,
+        ref_slider_num_run: ref_slider_num_run,
+        //
         value1: value1,
         value2: value2,
         //
@@ -77,8 +84,8 @@ function TwoSliders({
             slider_num={ref_slider_num_run.current}
             range={range}
             active_range={active_range}
-            slider_1={slider_1}
-            slider_2={slider_2}
+            slider1={slider1}
+            slider2={slider2}
             value1={value1}
             value2={value2}
             handleMouseDown={handleMouseDown}

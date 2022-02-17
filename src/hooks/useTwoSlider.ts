@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { common_types } from 'react-commons-ts';
 //
 import { useOneSlider } from './useOneSlider';
@@ -6,7 +6,8 @@ import { useOneSlider } from './useOneSlider';
 //
 interface useTwoSliderProps {
     ref_range_elm: common_types.RefElmType<HTMLDivElement>;
-    ref_has_change_range: common_types.UseRefType<boolean>;
+    ref_has_change_range?: common_types.UseRefType<boolean>;
+    ref_slider_num_run?: common_types.UseRefType<number>;
 
     value1: number;
     value2: number;
@@ -22,8 +23,9 @@ interface useTwoSliderProps {
 
 //
 export function useTwoSlider({
-    ref_range_elm = { current: null },
+    ref_range_elm,
     ref_has_change_range = { current: false },
+    ref_slider_num_run = { current: -1 },
 
     value1,
     value2,
@@ -37,8 +39,6 @@ export function useTwoSlider({
     afterMouseUp = () => {}
 }: useTwoSliderProps) {
     //
-    const ref_slider_num_run = useRef(-1);
-
     const ref_value1 = useRef(value1);
     const ref_value2 = useRef(value2);
 
@@ -53,6 +53,20 @@ export function useTwoSlider({
         afterMouseUp: _afterMouseUp,
         afterMousemove: afterMousemove
     });
+
+    //
+    useEffect(() => {
+        if (ref_slider_num_run.current == -1) {
+            ref_value1.current = value1;
+        }
+    }, [value1]);
+
+    //
+    useEffect(() => {
+        if (ref_slider_num_run.current == -1) {
+            ref_value2.current = value2;
+        }
+    }, [value2]);
 
     // ----
 
@@ -73,12 +87,12 @@ export function useTwoSlider({
             Math.abs(ref_value1.current - new_percent) <=
             Math.abs(ref_value2.current - new_percent)
         ) {
-            ref_slider_num_run.current = 1;
             ref_value1.current = new_percent;
+            ref_slider_num_run.current = 1;
             handleChangeSlider1(new_percent);
         } else {
-            ref_slider_num_run.current = 2;
             ref_value2.current = new_percent;
+            ref_slider_num_run.current = 2;
             handleChangeSlider2(new_percent);
         }
     }
@@ -86,7 +100,6 @@ export function useTwoSlider({
     // ----
 
     return {
-        ref_slider_num_run,
         onDown
     };
 }

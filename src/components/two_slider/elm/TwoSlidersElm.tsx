@@ -17,8 +17,8 @@ interface TwoSlidersElmProps {
 
     range: React.ReactElement;
     active_range: React.ReactElement;
-    slider_1: React.ReactElement;
-    slider_2: React.ReactElement;
+    slider1: React.ReactElement;
+    slider2: React.ReactElement;
     value1: number;
     value2: number;
 
@@ -34,8 +34,8 @@ function TwoSlidersElm({
 
     range,
     active_range,
-    slider_1,
-    slider_2,
+    slider1,
+    slider2,
     value1,
     value2,
 
@@ -76,14 +76,14 @@ function TwoSlidersElm({
                 className={_getClassModuleCss('TwoSlidersElm_slider')}
                 style={{ left: `${value1}%` }}
             >
-                {slider_1}
+                {slider1}
             </div>
 
             <div
                 className={_getClassModuleCss('TwoSlidersElm_slider')}
                 style={{ left: `${value2}%` }}
             >
-                {slider_2}
+                {slider2}
             </div>
         </div>
     );
